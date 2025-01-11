@@ -1,0 +1,12 @@
+{
+  "greeting": "Hello",
+  "welcome_message": "Welcome to our application",
+  "title": "dashboard",
+  "language-ko": "korean",
+  "language-en": "english",
+  "navigation": {
+    "board": "board",
+    "users": "users",
+    "todo": "todo-list"
+  }
+}

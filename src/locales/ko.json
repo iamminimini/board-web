@@ -1,0 +1,12 @@
+{
+  "greeting": "안녕하세요",
+  "welcome_message": "우리 애플리케이션에 오신 것을 환영합니다",
+  "title": "작업/할일 관리",
+  "language-ko": "한국어",
+  "language-en": "영어",
+  "navigation": {
+    "board": "게시글",
+    "users": "사용자",
+    "todo": "투두리스트"
+  }
+}

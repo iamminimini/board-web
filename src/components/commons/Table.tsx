@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from 'react';
 import { RowType } from '@atlaskit/dynamic-table/dist/types/types';
 import DynamicTable from '@atlaskit/dynamic-table';
 
-// 컬럼 props 정의
 export interface ColumnProps<T> {
   key: string;
   content: string;

@@ -5,10 +5,9 @@ import {
   Link,
   Switch,
   useHistory,
-  withRouter,
 } from 'react-router-dom';
 import Users from './pages/Users';
-import Board from './pages/Board';
+import Board from './pages/Board/Board';
 import TodoList from './pages/TodoList';
 import {
   Content,
@@ -25,6 +24,7 @@ import { ConfluenceIcon, ConfluenceLogo } from '@atlaskit/logo';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Button from '@atlaskit/button/new';
+import BoardDetail from './pages/Board/BoardDetail';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -71,7 +71,7 @@ function App() {
           <AtlassianNavigation
             label={''}
             primaryItems={[
-              <StyledLink to='/' key='board'>
+              <StyledLink to='/board' key='board'>
                 <PrimaryButton>{t('navigation.board')}</PrimaryButton>
               </StyledLink>,
               <StyledLink to='/users' key='users'>
@@ -95,7 +95,8 @@ function App() {
               }}
             >
               <Switch>
-                <Route exact path='/' component={Board} />
+                <Route exact path='/board' component={Board} />
+                <Route exact path='/board/:id' component={BoardDetail} />
                 <Route path='/users' component={Users} />
                 <Route path='/todo-list' component={TodoList} />
               </Switch>
@@ -127,12 +128,4 @@ const LanguageSelector = styled.div`
   position: absolute;
   top: 15px;
   right: 20px;
-  /* button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    &:hover {
-      color: #333;
-    }
-  } */
 `;

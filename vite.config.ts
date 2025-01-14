@@ -4,6 +4,15 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://apps-test.osci.kr',
+        changeOrigin: true,
+        ws: true,
+      },
+    },
+  },
   plugins: [react()],
   resolve: {
     alias: {
@@ -12,6 +21,8 @@ export default defineConfig({
       '@type': path.resolve(__dirname, 'src/type'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@react-query': path.resolve(__dirname, 'src/react-query'),
     },
   },
 });

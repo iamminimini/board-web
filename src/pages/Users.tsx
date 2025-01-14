@@ -7,58 +7,45 @@ import TextField from '@atlaskit/textfield';
 import '@atlaskit/css-reset'; // 스타일 추가
 import { RowType } from '@atlaskit/dynamic-table/dist/types/types';
 import { User } from '@type/user';
-import EditUserModal from '@components/EditUserModal';
+import EditUserModal from '@components/Users/EditUserModal';
 import PageHeader from '@atlaskit/page-header';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
+import styled from 'styled-components';
+import { useGetUsers } from '@react-query/queries/userQueries';
 
 function Users() {
-  const initialData: User[] = [
-    { id: 1, name: 'John Doe', age: 28 },
-    { id: 2, name: 'Jane Smith', age: 34 },
-    { id: 3, name: 'Sam Johnson', age: 45 },
-    { id: 3, name: 'Sam Johnson', age: 45 },
-    { id: 3, name: 'Sam Johnson', age: 45 },
-    { id: 3, name: 'Sam Johnson', age: 45 },
-    { id: 3, name: 'Sam Johnson', age: 45 },
-    { id: 3, name: 'Sam Johnson', age: 45 },
-  ];
+  const { usersData, isLoading } = useGetUsers();
 
-  const [data, setData] = useState<User[]>(initialData);
+  const [data, setData] = useState<User[]>(usersData || []);
   const [rows, setRows] = useState<RowType[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [selectedUserId, setSelectedUserId] = useState<number>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const { t } = useTranslation();
 
   // 행 삭제 함수
   const deleteRow = (id: number) => {
     setData((prevData) => prevData.filter((row) => row.id !== id));
   };
 
-  // 사용자 정보 수정 함수
-  const editUser = (updatedUser: User) => {
-    setData((prevData) =>
-      prevData.map((user) => (user.id === updatedUser.id ? updatedUser : user))
-    );
-  };
+  useEffect(() => {
+    if (usersData) setData(usersData);
+  }, [usersData]);
 
   // 테이블 컬럼 정의
   const head = {
     cells: [
-      {
-        key: 'profile',
-        content: 'Profile',
-        width: 10,
-      },
       {
         key: 'id',
         content: 'ID',
         isSortable: true,
         width: 10,
       },
+      {
+        key: 'profile',
+        content: '',
+        width: 10,
+      },
       { key: 'name', content: 'Name' },
-      { key: 'age', content: 'Age' },
       {
         key: 'actions',
         content: 'Actions',
@@ -72,6 +59,7 @@ function Users() {
     const newRows = data.map((row) => ({
       key: row.id.toString(),
       cells: [
+        { key: `${row.id}-id`, content: row.id },
         {
           key: `${row.id}-image`,
           content: (
@@ -83,14 +71,13 @@ function Users() {
             />
           ),
         },
-        { key: `${row.id}-id`, content: row.id },
         { key: `${row.id}-name`, content: row.name },
-        { key: `${row.id}-age`, content: row.age },
+        { key: `${row.id}-email`, content: row.email },
         {
-          key: `${row.id}-content`,
+          key: `${row.id}-action`,
           content: (
             <ButtonGroup>
-              <Button onClick={() => openModal(row)} appearance='default'>
+              <Button onClick={() => openModal(row.id)} appearance='default'>
                 수정
               </Button>
               <Button onClick={() => deleteRow(row.id)} appearance='danger'>
@@ -105,8 +92,9 @@ function Users() {
   }, [data]);
 
   // 사용자 정보 모달 열기
-  const openModal = (user: User) => {
-    setSelectedUser(user);
+  const openModal = (id: number) => {
+    if (!id) return;
+    setSelectedUserId(id);
     setIsModalOpen(true);
   };
 
@@ -118,15 +106,16 @@ function Users() {
   return (
     <div>
       <PageHeader>{t('navigation.users')}</PageHeader>
-      검색
-      <TextField
-        placeholder='Search users'
-        value={searchTerm}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setSearchTerm(e.target.value)
-        }
-        width='300px'
-      />
+      <SearchBarWrapper>
+        <TextField
+          placeholder='사용자 이름을 입력하세요'
+          value={searchKeyword}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setSearchKeyword(e.target.value)
+          }
+          width={300}
+        />
+      </SearchBarWrapper>
       <DynamicTable
         isFixedSize
         head={head}
@@ -140,15 +129,18 @@ function Users() {
         emptyView={<div>데이터가 없습니다.</div>}
       />
       {/* 사용자 상세보기 모달 */}
-      {isModalOpen && selectedUser && (
-        <EditUserModal
-          user={selectedUser}
-          onClose={closeModal}
-          onSave={editUser}
-        />
+      {isModalOpen && selectedUserId && (
+        <EditUserModal userId={selectedUserId} onClose={closeModal} />
       )}
     </div>
   );
 }
 
 export default Users;
+
+const SearchBarWrapper = styled.div`
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin-bottom: 30px;
+`;

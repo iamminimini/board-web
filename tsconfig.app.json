@@ -29,7 +29,9 @@
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
       "@type/*": ["type/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@react-query/*": ["react-query/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["src", "src/**/*", "src/locales/**/*"]

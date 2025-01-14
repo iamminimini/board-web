@@ -1,5 +1,10 @@
 export interface User {
   id: number;
   name: string;
-  age: number;
+  email: string;
+}
+
+export interface UpdateUser {
+  name: string;
+  email: string;
 }

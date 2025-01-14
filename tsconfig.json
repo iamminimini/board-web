@@ -12,6 +12,8 @@
       "@type/*": ["type/*"],
       "@hooks/*": ["hooks/*"],
       "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"],
+      "@react-query/*": ["react-query/*"],
       "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
     }
   }

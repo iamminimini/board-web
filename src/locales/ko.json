@@ -1,12 +1,75 @@
 {
-  "greeting": "안녕하세요",
-  "welcome_message": "우리 애플리케이션에 오신 것을 환영합니다",
   "title": "작업/할일 관리",
-  "language-ko": "한국어",
-  "language-en": "영어",
+  "language_ko": "한국어",
+  "language_en": "영어",
   "navigation": {
-    "board": "게시글",
+    "posts": "게시글",
     "users": "사용자",
-    "todo": "투두리스트"
+    "todos": "할 일 목록"
+  },
+  "back_to_list": "목록으로 돌아가기",
+  "no_filtered_data": "필터된 데이터가 없습니다",
+  "buttons": {
+    "register": "등록",
+    "edit": "수정",
+    "delete": "삭제",
+    "cancel": "취소"
+  },
+
+  "todos": {
+    "page_header": "할 일 목록",
+    "table_empty_message": "할 일이 없습니다.",
+    "columns": {
+      "id": "ID",
+      "title": "제목",
+      "user_name": "사용자 이름",
+      "completed": "완료 여부"
+    },
+    "completed_status": {
+      "done": "완료",
+      "not_done": "미완료"
+    }
+  },
+  "users": {
+    "page_header": "사용자 목록",
+    "search_placeholder": "사용자 이름 또는 이메일을 입력하세요",
+    "table_empty_message": "사용자가 없습니다.",
+    "columns": {
+      "id": "ID",
+      "profile": "프로필",
+      "name": "이름",
+      "email": "이메일",
+      "actions": "작업"
+    },
+    "search_category_options": {
+      "name": "이름",
+      "email": "이메일"
+    },
+    "edit_user_modal": {
+      "title": "사용자 수정",
+      "name_label": "이름",
+      "email_label": "이메일",
+      "name_required_error": "이름은 필수 항목입니다.",
+      "email_required_error": "이메일은 필수 항목입니다.",
+      "invalid_email_format": "유효하지 않은 이메일 형식입니다."
+    }
+  },
+  "posts": {
+    "page_header": "게시글 목록",
+    "search_placeholder": "제목을 입력하세요",
+    "date_picker_placeholder": "날짜를 선택하세요",
+    "table_empty_message": "게시글이 없습니다.",
+    "columns": {
+      "id": "ID",
+      "title": "제목",
+      "content": "내용",
+      "createdAt": "작성일"
+    }
+  },
+  "post_detail": {
+    "comments_count": "댓글 {{count}}개",
+    "comment_placeholder": "댓글을 입력하세요.",
+    "comment_submit": "댓글 작성",
+    "created_at": "작성일: {{date}}"
   }
 }

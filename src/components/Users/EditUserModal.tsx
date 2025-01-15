@@ -10,6 +10,7 @@ import { ButtonGroup } from '@atlaskit/button';
 import { queryClient } from '@react-query/queryClient';
 import { QUERY_KEYS } from '@react-query/queryKeys';
 import { emailRegex } from '@utils/validators';
+import { t } from 'i18next';
 
 interface EditUserModalProps {
   userId: number;
@@ -49,18 +50,19 @@ const EditUserModal = ({ userId, onClose }: EditUserModalProps) => {
   };
 
   return (
-    <Modal onClose={onClose} label='사용자 수정'>
+    <Modal onClose={onClose} label={t('users.edit_user_modal.title')}>
       <ModalContents>
         <Form onSubmit={handleSubmit}>
           {({ formProps, submitting, setFieldValue }) => (
             <form {...formProps}>
               <Field
                 name='name'
-                label='Name'
+                label={t('user.edit_user_modal.name_label')}
                 defaultValue={name}
                 isRequired
                 validate={(value) => {
-                  if (!value) return 'Name is required';
+                  if (!value)
+                    return t('users.edit_user_modal.name_required_error');
                   return undefined;
                 }}
               >
@@ -81,12 +83,14 @@ const EditUserModal = ({ userId, onClose }: EditUserModalProps) => {
 
               <Field
                 name='email'
-                label='Email'
+                label={t('user.edit_user_modal.email_label')}
                 defaultValue={email}
                 isRequired
                 validate={(value) => {
-                  if (!value) return 'Email is required';
-                  if (!emailRegex.test(value)) return 'Invalid email format';
+                  if (!value)
+                    return t('users.edit_user_modal.email_required_error');
+                  if (!emailRegex.test(value))
+                    return t('users.edit_user_modal.invalid_email_format');
                   return undefined;
                 }}
               >
@@ -113,10 +117,10 @@ const EditUserModal = ({ userId, onClose }: EditUserModalProps) => {
                     appearance='primary'
                     isDisabled={submitting}
                   >
-                    수정하기
+                    {t('buttons.edit')}
                   </Button>
                   <Button type='button' onClick={onClose} appearance='subtle'>
-                    취소
+                    {t('buttons.cancel')}
                   </Button>
                 </ButtonGroup>
               </FormFooter>

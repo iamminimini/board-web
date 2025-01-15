@@ -20,12 +20,14 @@ interface TableProps<T> {
   columns: Array<ColumnProps<T>>;
   data: T[];
   isLoading?: boolean;
+  emptyMessage?: string;
 }
 
 function Table<T extends { id: number }>({
   columns,
   data,
   isLoading,
+  emptyMessage,
 }: TableProps<T>) {
   const [rows, setRows] = useState<RowType[]>([]);
 
@@ -62,7 +64,7 @@ function Table<T extends { id: number }>({
       defaultPage={1}
       loadingSpinnerSize='large'
       isLoading={isLoading}
-      emptyView={<div>데이터가 없습니다.</div>}
+      emptyView={<div>{emptyMessage}</div>}
     />
   );
 }

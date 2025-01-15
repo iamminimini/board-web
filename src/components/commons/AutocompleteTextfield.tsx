@@ -4,6 +4,7 @@ import DropdownMenu, {
   DropdownItem,
   DropdownItemGroup,
 } from '@atlaskit/dropdown-menu';
+import { t } from 'i18next';
 
 type ObjectData<T> = T[];
 
@@ -88,7 +89,7 @@ const AutocompleteTextfield = <T extends object>({
       >
         <DropdownItemGroup>
           {filteredSuggestions.length === 0 ? (
-            <DropdownItem isDisabled>필터된 데이터가 없습니다</DropdownItem>
+            <DropdownItem isDisabled>{t('no_filtered_data')}</DropdownItem>
           ) : (
             filteredSuggestions.map((item) => {
               const itemKey =

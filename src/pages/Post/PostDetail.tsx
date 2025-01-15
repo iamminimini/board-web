@@ -1,21 +1,27 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import CommentItem from '@components/Posts/CommentItem';
 import { CommentType } from '@type/post';
+
 import styled from 'styled-components';
-import Button, { LinkButton } from '@atlaskit/button/new';
+import Button from '@atlaskit/button/new';
 import TextField from '@atlaskit/textfield';
 import { Stack, Text } from '@atlaskit/primitives';
-import CommentItem from '@components/Posts/CommentItem';
 import ArrowLeftIcon from '@atlaskit/icon/core/arrow-left';
 import PageHeader from '@atlaskit/page-header';
-import dayjs from 'dayjs';
 import {
   useGetPost,
   useGetPostComment,
 } from '@react-query/queries/postQueries';
 
+import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
+
 const PostDetail = () => {
+  const history = useHistory();
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
+
   const { postData } = useGetPost(Number(id));
   const { commentsData } = useGetPostComment(Number(id));
 
@@ -49,10 +55,14 @@ const PostDetail = () => {
   };
 
   const actionsContent = (
-    <LinkButton appearance='subtle' href='/posts'>
-      <ArrowLeftIcon label='이전으로' />
-      <Text> 목록으로</Text>
-    </LinkButton>
+    <BackButton
+      onClick={() => {
+        history.goBack();
+      }}
+    >
+      <ArrowLeftIcon label={t('back_to_list')} />
+      <Text> {t('back_to_list')}</Text>
+    </BackButton>
   );
 
   return (
@@ -63,11 +73,17 @@ const PostDetail = () => {
           <Text>{postData?.content}</Text>
         </BoardContentWrapper>
         <Text size='small' color='color.text.accent.gray' align='end'>
-          <b>{dayjs(postData?.createdAt).format('YYYY-MM-DD HH:mm:ss')}</b> 작성
+          <b>
+            {t('post_detail.created_at', {
+              date: dayjs(postData?.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+            })}
+          </b>
         </Text>
       </Stack>
       <Stack space='space.150'>
-        <Text weight='bold'>댓글 {comments.length}개</Text>
+        <Text weight='bold'>
+          {t('post_detail.comments_count', { count: comments.length || 0 })}
+        </Text>
         {/* 댓글 입력 */}
         <CommentInputWrapper>
           <TextField
@@ -75,11 +91,11 @@ const PostDetail = () => {
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setNewComment(e.target.value)
             }
-            placeholder='댓글을 입력하세요.'
+            placeholder={t('post_detail.comment_placeholder')}
             rows={3}
           />
           <Button appearance='default' onClick={handleCommentSubmit}>
-            댓글 작성
+            {t('post_detail.comment_submit')}
           </Button>
         </CommentInputWrapper>
         {/* 댓글 목록 */}
@@ -100,6 +116,8 @@ export default PostDetail;
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+  padding-top: 20px;
 `;
 
 const BoardContentWrapper = styled.div`
@@ -112,4 +130,13 @@ const CommentInputWrapper = styled.div`
   margin: 20px 0;
   display: flex;
   gap: 10px;
+`;
+
+const BackButton = styled.button`
+  border: 0;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
 `;

@@ -3,7 +3,6 @@ export interface User {
   name: string;
   email: string;
 }
-
 export interface UpdateUser {
   name: string;
   email: string;

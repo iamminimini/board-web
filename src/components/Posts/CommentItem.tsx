@@ -6,7 +6,8 @@ import { CommentType } from '@type/post';
 import dayjs from 'dayjs';
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import { Stack, Text } from '@atlaskit/primitives';
+import { Text } from '@atlaskit/primitives';
+import { t } from 'i18next';
 
 interface CommentItemProps {
   comment: CommentType;
@@ -34,7 +35,7 @@ const CommentItem = ({ comment, onSave }: CommentItemProps) => {
             rows={3}
           />
           <Button appearance='primary' onClick={handleSave}>
-            저장
+            {t('buttons.register')}
           </Button>
         </>
       ) : (
@@ -53,7 +54,7 @@ const CommentItem = ({ comment, onSave }: CommentItemProps) => {
           />
           <Flex>
             <Button appearance='subtle' onClick={() => setIsEditing(true)}>
-              수정
+              {t('buttons.edit')}
             </Button>
           </Flex>
         </>

@@ -17,6 +17,7 @@ import { TodoTableDataType } from '@type/todo';
 
 //   return { todosData, isLoading, refetchTodosData };
 // };
+
 export const useGetTodos = (userId?: number) => {
   // userId가 있으면 getUserTodo를 호출하고, 없으면 getTodos 호출
   const fetchTodos = userId ? () => getUserTodo(userId) : getTodos;
@@ -31,7 +32,7 @@ export const useGetTodos = (userId?: number) => {
     refetchOnWindowFocus: false,
   });
 
-  // 사용자 데이터 병렬로 가져오기
+  // todosData가 있을 경우, 각 투두의 사용자 데이터를 병렬로 가져오는 쿼리
   const userQueries = useQueries(
     todosData?.map((todo) => ({
       queryKey: [QUERY_KEYS.GET_USER, todo.userId],
@@ -42,11 +43,12 @@ export const useGetTodos = (userId?: number) => {
     })) || [] // todosData가 없으면 빈 배열 반환
   );
 
+  // 모든 사용자 쿼리에서 유효한 데이터만 필터링
   const usersData = userQueries
     .map((query) => query.data)
-    .filter((user): user is NonNullable<typeof user> => !!user); // 유효한 데이터만 필터링
+    .filter((user): user is NonNullable<typeof user> => !!user);
 
-  // 사용자 이름 추가한 ToDo 데이터
+  // 각 투두에 사용자 이름을 추가한 새로운 데이터를 생성
   const todosWithUserNames: TodoTableDataType[] =
     todosData?.map((todo) => {
       const user = usersData.find((user) => user.id === todo.userId);
@@ -68,14 +70,14 @@ export const useGetTodos = (userId?: number) => {
 // 투두 상세
 export const useGetTodo = (id: number) => {
   const {
-    data: TodoData,
+    data: todoData,
     isLoading,
     refetch: refetchTodoData,
   } = useQuery([QUERY_KEYS.GET_TODO, id], () => getTodo(id), {
     enabled: !!id,
   });
 
-  return { TodoData, isLoading, refetchTodoData };
+  return { todoData, isLoading, refetchTodoData };
 };
 
 // 특정 사용자 ID로 할 일 목록을 가져옵니다.

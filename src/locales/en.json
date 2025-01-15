@@ -1,12 +1,77 @@
 {
-  "greeting": "Hello",
-  "welcome_message": "Welcome to our application",
-  "title": "dashboard",
-  "language-ko": "korean",
-  "language-en": "english",
+  "title": "Task/To-Do Management",
+  "language_ko": "Korean",
+  "language_en": "English",
   "navigation": {
-    "board": "board",
-    "users": "users",
-    "todo": "todo-list"
+    "posts": "Posts",
+    "users": "Users",
+    "todos": "To-Do List"
+  },
+  "back_to_list": "Back to list",
+  "buttons": {
+    "register": "Register",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "no_filtered_data": "No filtered data",
+  "todos": {
+    "page_header": "To-Do List",
+    "table_empty_message": "No tasks available.",
+    "columns": {
+      "id": "ID",
+      "title": "Title",
+      "user_name": "User Name",
+      "completed": "Completion Status"
+    },
+    "completed_status": {
+      "done": "Completed",
+      "not_done": "Not Completed"
+    }
+  },
+
+  "users": {
+    "page_header": "User List",
+    "search_placeholder": "Enter user name or email",
+    "table_empty_message": "No users available.",
+    "columns": {
+      "id": "ID",
+      "profile": "Profile",
+      "name": "Name",
+      "email": "Email",
+      "actions": "Actions"
+    },
+    "search_category_options": {
+      "name": "Name",
+      "email": "Email"
+    },
+    "edit_user_modal": {
+      "title": "Edit User",
+      "name_label": "Name",
+      "email_label": "Email",
+      "name_required_error": "Name is required.",
+      "email_required_error": "Email is required.",
+      "invalid_email_format": "Invalid email format."
+    }
+  },
+
+  "posts": {
+    "page_header": "Post List",
+    "search_placeholder": "Enter title",
+    "date_picker_placeholder": "Select a date",
+    "table_empty_message": "No posts available.",
+    "columns": {
+      "id": "ID",
+      "title": "Title",
+      "content": "Content",
+      "createdAt": "Created At"
+    }
+  },
+
+  "post_detail": {
+    "comments_count": "{{count}} comments",
+    "comment_placeholder": "Enter a comment",
+    "comment_submit": "Submit Comment",
+    "created_at": "Created At: {{date}}"
   }
 }

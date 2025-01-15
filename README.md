@@ -1,50 +1,41 @@
-# React + TypeScript + Vite
+이 프로젝트는 API 사이트와 Atlassian Design 시스템의 컴포넌트를 사용한 웹 애플리케이션입니다. 요구 사항에 맞게 사용자 목록 페이지, 게시물 목록 페이지, 할 일 목록 페이지 등을 구현하였습니다.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 주요 기능
 
-Currently, two official plugins are available:
+### 1. 사용자 목록 페이지
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **사용자 목록 표시**: 사용자 목록을 테이블 형식으로 표시하며, 각 항목을 클릭하면 해당 사용자의 상세 정보를 볼 수 있습니다.
+- **검색 기능**: 사용자의 이름과 이메일을 검색할 수 있으며, 자동완성 기능이 제공됩니다.
+- **사용자 정보 수정**: 사용자의 정보를 수정할 수 있는 버튼 클릭시 수정이 가능한 모달이 활성화 됩니다. 데이터 수정 후 모달이 닫히며 목록이 리패치 됩니다.
+- **사용자 정보 삭제**: 삭제 클릭시 row가 삭제됩니다.
 
-## Expanding the ESLint configuration
+### 2. 게시물 목록 페이지
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **게시물 목록 표시**: 게시물 목록을 테이블 형식으로 표시하며, 제목을 클릭하면 해당 게시물의 상세 정보를 볼 수 있습니다.
+- **댓글 목록 표시**: 게시물 상세 화면 내에서 해당 게시물의 댓글 목록을 표시합니다.
+- **게시물 및 댓글 수정/삭제**: 게시물과 댓글을 수정 및 삭제할 수 있는 버튼이 UI에 표시되지만, 수정과 삭제가 가능하지만 데이터에 영향을 주진 않습니다.
+- **날짜 필터링**: 게시물을 날짜를 기준으로 필터링할 수 있는 기능이 제공됩니다.
+- **게시물 제목 검색**: 게시물 제목을 검색할 수 있으며, 제목에 대해 자동완성 기능이 제공됩니다. 만일 날짜 필터가 적용 되어 있는 경우 날짜 필터링을 우선합니다.
+- **페이징 기능**: 게시물이 많을 경우 페이징 기능을 통해 여러 페이지로 나누어 표시됩니다.
 
-- Configure the top-level `parserOptions` property like this:
+### 3. 할일 목록 페이지
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **할일 목록 표시**: 할일 목록을 표시하며, 완료된 할일과 미완료된 할일을 아이콘으로 구분하여 시각적으로 표시할 수 있습니다.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 4. 다국어 처리
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **한/영 다국어 지원**: 이 프로젝트는 한/영 다국어를 지원하며 API에서 제공하는 데이터 외의 텍스트는 다국어로 처리됩니다.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 기술 스택
+
+- **React**: UI 라이브러리
+- **Typescript**: 타입 안정성을 위한 언어
+- **Atlassian Design 시스템**: UI 컴포넌트 디자인을 위해 사용되었습니다.
+- **React Query**: 데이터 fetching 및 캐싱, API 요청 관리를 위한 라이브러리
+- **styled-components**: 스타일링을 위한 CSS-in-JS 라이브러리
+- **i18next**: 다국어 처리를 위해 사용되었습니다.
+- **dayjs**: 날짜 처리 및 포맷팅을 위해 사용되었습니다.
+
+## 실행 방법
+
+npm install && npm run dev

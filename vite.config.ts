@@ -4,15 +4,15 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://apps-test.osci.kr',
-        changeOrigin: true,
-        ws: true,
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'https://apps-test.osci.kr',
+  //       changeOrigin: false,
+  //       ws: true,
+  //     },
+  //   },
+  // },
   plugins: [react()],
   resolve: {
     alias: {

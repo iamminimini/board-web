@@ -19,9 +19,14 @@ export interface ColumnProps<T> {
 interface TableProps<T> {
   columns: Array<ColumnProps<T>>;
   data: T[];
+  isLoading?: boolean;
 }
 
-function Table<T extends { id: number }>({ columns, data }: TableProps<T>) {
+function Table<T extends { id: number }>({
+  columns,
+  data,
+  isLoading,
+}: TableProps<T>) {
   const [rows, setRows] = useState<RowType[]>([]);
 
   // 행 렌더링
@@ -56,7 +61,7 @@ function Table<T extends { id: number }>({ columns, data }: TableProps<T>) {
       rowsPerPage={5}
       defaultPage={1}
       loadingSpinnerSize='large'
-      isLoading={false}
+      isLoading={isLoading}
       emptyView={<div>데이터가 없습니다.</div>}
     />
   );

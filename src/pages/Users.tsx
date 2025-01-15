@@ -12,13 +12,20 @@ import PageHeader from '@atlaskit/page-header';
 import { t } from 'i18next';
 import styled from 'styled-components';
 import { useGetUsers } from '@react-query/queries/userQueries';
+import AutocompleteTextfield from '@components/commons/AutocompleteTextfield';
+import Dropdown from '@components/commons/DropDown';
+
+const searchCategoryOptions = [
+  { key: 'name', label: '이름' },
+  { key: 'email', label: '이메일' },
+];
 
 function Users() {
   const { usersData, isLoading } = useGetUsers();
 
   const [data, setData] = useState<User[]>(usersData || []);
   const [rows, setRows] = useState<RowType[]>([]);
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchCategory, setSearchCategory] = useState<keyof User>('name');
   const [selectedUserId, setSelectedUserId] = useState<number>();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -38,17 +45,19 @@ function Users() {
         key: 'id',
         content: 'ID',
         isSortable: true,
-        width: 10,
+        width: 5,
       },
       {
         key: 'profile',
         content: '',
-        width: 10,
+        width: 5,
       },
-      { key: 'name', content: 'Name' },
+      { key: 'name', content: 'Name', width: 5 },
+      { key: 'email', content: 'Email', width: 75 },
       {
         key: 'actions',
         content: 'Actions',
+        width: 10,
       },
     ],
   };
@@ -103,18 +112,51 @@ function Users() {
     setIsModalOpen(false);
   };
 
+  const handleFilter = (filteredData: string) => {
+    // 필터된 데이터가 비었을 경우 모든 데이터로 복원
+    if (!filteredData) {
+      setData(usersData || []); // usersData가 undefined일 경우 빈 배열을 설정
+      return;
+    }
+    // 이름이 정확히 일치하는 사용자만 필터링
+    const filteredUsers = usersData?.filter((user) =>
+      user[searchCategory]
+        .toString()
+        .toLowerCase()
+        .includes(filteredData.toLowerCase())
+    );
+
+    setData(filteredUsers || []);
+  };
+
+  const handleCategoryChange = (key: string) => {
+    setSearchCategory(key as keyof User);
+  };
+
   return (
     <div>
       <PageHeader>{t('navigation.users')}</PageHeader>
       <SearchBarWrapper>
-        <TextField
-          placeholder='사용자 이름을 입력하세요'
+        <Dropdown
+          options={searchCategoryOptions}
+          selectedKey={searchCategory}
+          onChange={handleCategoryChange}
+        />
+        <AutocompleteTextfield
+          placeholder='사용자 이름 또는 이메일을 입력하세요'
+          data={usersData || []} // 모든 데이터 전달
+          keyField={searchCategory} // 필터링 기준 필드
+          onFilter={handleFilter} // 필터링된 데이터를 처리할 콜백
+        />
+        {/* <TextField
+          isCompact
+          placeholder='사용자 이름 또는 이메일을 입력하세요'
           value={searchKeyword}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setSearchKeyword(e.target.value)
           }
           width={300}
-        />
+        /> */}
       </SearchBarWrapper>
       <DynamicTable
         isFixedSize
@@ -125,7 +167,7 @@ function Users() {
         // onPageChange={(newPage: number) => setPage(newPage + 1)}
         defaultPage={0}
         loadingSpinnerSize='large'
-        isLoading={false}
+        isLoading={isLoading}
         emptyView={<div>데이터가 없습니다.</div>}
       />
       {/* 사용자 상세보기 모달 */}

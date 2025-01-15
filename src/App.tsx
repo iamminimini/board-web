@@ -7,8 +7,7 @@ import {
   useHistory,
 } from 'react-router-dom';
 import Users from './pages/Users';
-import Board from './pages/Board/Board';
-import TodoList from './pages/TodoList';
+import Todos from './pages/Todos';
 import {
   Content,
   Main,
@@ -24,7 +23,8 @@ import { ConfluenceIcon, ConfluenceLogo } from '@atlaskit/logo';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Button from '@atlaskit/button/new';
-import BoardDetail from './pages/Board/BoardDetail';
+import PostDetail from './pages/Post/PostDetail';
+import Posts from './pages/Post/Posts';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -71,13 +71,13 @@ function App() {
           <AtlassianNavigation
             label={''}
             primaryItems={[
-              <StyledLink to='/board' key='board'>
+              <StyledLink to='/posts' key='posts'>
                 <PrimaryButton>{t('navigation.board')}</PrimaryButton>
               </StyledLink>,
               <StyledLink to='/users' key='users'>
                 <PrimaryButton>{t('navigation.users')}</PrimaryButton>
               </StyledLink>,
-              <StyledLink to='/todo-list' key='todo-list'>
+              <StyledLink to='/todos' key='todo-list'>
                 <PrimaryButton>{t('navigation.todo')}</PrimaryButton>
               </StyledLink>,
             ]}
@@ -95,10 +95,10 @@ function App() {
               }}
             >
               <Switch>
-                <Route exact path='/board' component={Board} />
-                <Route exact path='/board/:id' component={BoardDetail} />
+                <Route exact path='/posts' component={Posts} />
+                <Route exact path='/post/:id' component={PostDetail} />
                 <Route path='/users' component={Users} />
-                <Route path='/todo-list' component={TodoList} />
+                <Route path='/todos' component={Todos} />
               </Switch>
             </div>
           </FullWidthMain>

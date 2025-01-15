@@ -10,7 +10,6 @@ export const useGetUsers = () => {
     isLoading,
     refetch: refetchUsersData,
   } = useQuery([QUERY_KEYS.GET_USERS], () => getUsers(), {
-    staleTime: 5 * 60 * 1000,
     enabled: true,
   });
 
@@ -23,7 +22,6 @@ export const useGetUser = (id: number) => {
     [QUERY_KEYS.GET_USER, id],
     () => getUser(id),
     {
-      staleTime: 5 * 60 * 1000,
       enabled: !!id, // id가 유효할 때만 쿼리 실행
     }
   );

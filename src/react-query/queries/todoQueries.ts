@@ -11,7 +11,6 @@ import { TodoTableDataType } from '@type/todo';
 //     isLoading,
 //     refetch: refetchTodosData,
 //   } = useQuery([QUERY_KEYS.GET_TODOS], () => getTodos(), {
-//     staleTime: 5 * 60 * 1000,
 //     enabled: true,
 //   });
 
@@ -27,7 +26,6 @@ export const useGetTodos = (userId?: number) => {
     isLoading: todosLoading,
     refetch: refetchTodos,
   } = useQuery([QUERY_KEYS.GET_TODOS, userId], fetchTodos, {
-    staleTime: 5 * 60 * 1000,
     enabled: true, // userId가 있을 때만 userTodo를 가져오거나, 모든 Todo를 가져오도록
     refetchOnWindowFocus: false,
   });
@@ -37,7 +35,6 @@ export const useGetTodos = (userId?: number) => {
     todosData?.map((todo) => ({
       queryKey: [QUERY_KEYS.GET_USER, todo.userId],
       queryFn: () => getUser(todo.userId),
-      staleTime: 5 * 60 * 1000,
       enabled: !!todo.userId, // todosData가 있을 때만 실행
       retry: 0, // 실패 시 재호출 안함
     })) || [] // todosData가 없으면 빈 배열 반환

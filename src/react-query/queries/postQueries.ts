@@ -9,14 +9,13 @@ export const useGetPosts = () => {
     isLoading,
     refetch: refetchPostsData,
   } = useQuery([QUERY_KEYS.GET_POSTS], () => getPosts(), {
-    staleTime: 5 * 60 * 1000,
     enabled: true,
   });
 
   return { postsData, isLoading, refetchPostsData };
 };
 
-// 투두 상세
+// 게시글 상세
 export const useGetPost = (id: number) => {
   const {
     data: postData,
